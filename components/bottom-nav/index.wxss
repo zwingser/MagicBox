@@ -1,0 +1,196 @@
+.dock-shell {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0 22rpx 26rpx;
+  box-sizing: border-box;
+  z-index: 30;
+}
+
+.dock-shell--inline {
+  position: relative;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  padding: 0;
+  margin-top: 10rpx;
+  z-index: 1;
+}
+
+.dock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10rpx;
+  padding: 22rpx 24rpx 30rpx;
+  border-radius: 42rpx 42rpx 0 0;
+  background: rgba(24, 24, 28, 0.94);
+  border-top: 1rpx solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 -12rpx 34rpx rgba(0, 0, 0, 0.22);
+}
+
+.dock__item,
+.dock__center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.dock__icon {
+  width: 74rpx;
+  height: 74rpx;
+  border-radius: 26rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c1c6d7;
+  background: rgba(255, 255, 255, 0.04);
+  box-sizing: border-box;
+}
+
+.dock__item--active .dock__icon {
+  background: #4b8eff;
+  color: #ffffff;
+  box-shadow: 0 14rpx 30rpx rgba(75, 142, 255, 0.24);
+}
+
+.dock__item:active,
+.dock__center:active {
+  opacity: 0.92;
+  transform: scale(0.96);
+}
+
+.dock-glyph {
+  position: relative;
+  width: 34rpx;
+  height: 34rpx;
+}
+
+.dock-glyph--grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4rpx;
+}
+
+.dock-glyph__cell {
+  width: 15rpx;
+  height: 15rpx;
+  border-radius: 5rpx;
+  background: currentColor;
+}
+
+.dock-glyph--panels {
+  display: flex;
+  flex-direction: column;
+  gap: 5rpx;
+}
+
+.dock-glyph__panel-row {
+  display: flex;
+  gap: 5rpx;
+}
+
+.dock-glyph__panel {
+  border-radius: 5rpx;
+  background: currentColor;
+  opacity: 0.96;
+}
+
+.dock-glyph__panel--wide {
+  width: 34rpx;
+  height: 12rpx;
+}
+
+.dock-glyph__panel--small {
+  width: 14rpx;
+  height: 16rpx;
+}
+
+.dock-glyph--browser {
+  width: 34rpx;
+  height: 30rpx;
+  border-radius: 8rpx;
+  border: 3rpx solid currentColor;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.dock-glyph__browser-top {
+  width: 100%;
+  height: 7rpx;
+  background: currentColor;
+  opacity: 0.94;
+}
+
+.dock-glyph__browser-line {
+  height: 3rpx;
+  border-radius: 999rpx;
+  margin-left: 6rpx;
+  background: currentColor;
+  opacity: 0.82;
+}
+
+.dock-glyph__browser-line--one {
+  width: 18rpx;
+  margin-top: 5rpx;
+}
+
+.dock-glyph__browser-line--two {
+  width: 12rpx;
+  margin-top: 4rpx;
+}
+
+.dock-glyph--sliders {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6rpx;
+}
+
+.dock-glyph__slider {
+  position: relative;
+  width: 34rpx;
+  height: 4rpx;
+  border-radius: 999rpx;
+  background: currentColor;
+}
+
+.dock-glyph__knob {
+  position: absolute;
+  top: 50%;
+  width: 10rpx;
+  height: 10rpx;
+  margin-top: -5rpx;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.dock-glyph__knob--one {
+  left: 2rpx;
+}
+
+.dock-glyph__knob--two {
+  left: 12rpx;
+}
+
+.dock-glyph__knob--three {
+  right: 2rpx;
+}
+
+.dock__add {
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 999rpx;
+  margin-top: -50rpx;
+  background: #adc6ff;
+  color: #163c72;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 62rpx;
+  font-weight: 500;
+  box-shadow: 0 22rpx 46rpx rgba(173, 198, 255, 0.24);
+}

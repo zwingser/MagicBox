@@ -1,0 +1,7 @@
+{
+  "disableScroll": true,
+  "customNavigateBack": true,
+  "navigationStyle": "custom",
+  "backgroundColor": "#131315",
+  "backgroundTextStyle": "light"
+}

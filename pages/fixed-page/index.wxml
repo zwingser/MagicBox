@@ -1,0 +1,53 @@
+<view class="page-root {{themeClass}} fixed-page-root">
+  <view wx:if="{{hasFixedPage}}" class="fixed-page-web-shell">
+    <web-view src="{{fixedPageUrl}}" bindload="onWebViewLoad" binderror="onWebViewError"></web-view>
+
+    <cover-view class="fixed-page-back-shell" style="{{fixedBackShellStyle}}" bindtap="onFixedBackTap">
+      <cover-view class="fixed-page-back">
+        <cover-view class="fixed-page-back__icon">{{backLabel}}</cover-view>
+      </cover-view>
+    </cover-view>
+
+    <cover-view class="fixed-page-dock-shell" style="{{fixedDockShellStyle}}">
+      <cover-view class="fixed-page-dock">
+        <cover-view wx:for="{{leftDockItems}}" wx:key="key" class="{{item.itemClass}}" data-key="{{item.key}}" bindtap="onFixedDockTap">
+          <cover-image class="fixed-page-dock__icon" src="{{item.iconPath}}"></cover-image>
+        </cover-view>
+
+        <cover-view class="fixed-page-dock__center">
+          <cover-view class="fixed-page-dock__add" data-key="add" bindtap="onFixedDockTap">
+            <cover-view class="fixed-page-dock__plus">+</cover-view>
+          </cover-view>
+        </cover-view>
+
+        <cover-view wx:for="{{rightDockItems}}" wx:key="key" class="{{item.itemClass}}" data-key="{{item.key}}" bindtap="onFixedDockTap">
+          <cover-image class="fixed-page-dock__icon" src="{{item.iconPath}}"></cover-image>
+        </cover-view>
+      </cover-view>
+    </cover-view>
+  </view>
+
+  <view wx:elif="{{!hasFixedPage}}" class="fixed-page-blank">
+    <view class="surface-card field-card fixed-page-card">
+      <view class="fixed-page-card__title">Fixed page not configured</view>
+      <view class="fixed-page-card__subtitle">This slot keeps one pinned http(s) page. Add a URL in Settings and MagicBox will load it here.</view>
+      <view class="btn-row">
+        <button class="primary-btn" bindtap="goToFixedPageSettings">Configure fixed page</button>
+        <button class="secondary-btn" bindtap="goHome1">Home 1</button>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{hasFixedPage && webViewFailed}}" class="fixed-page-state-shell">
+    <view class="surface-card field-card fixed-page-state-card">
+      <view class="fixed-page-card__title">Fixed page failed to load</view>
+      <view class="fixed-page-card__subtitle">The embedded page could not finish loading in the current runtime.</view>
+      <view class="helper-text">Current fixed page: {{fixedPageHost}}</view>
+      <view class="fixed-page-url">{{fixedPageUrl}}</view>
+      <view class="btn-row">
+        <button class="primary-btn" bindtap="goToFixedPageSettings">Edit URL</button>
+        <button class="secondary-btn" bindtap="goHome1">Home 1</button>
+      </view>
+    </view>
+  </view>
+</view>

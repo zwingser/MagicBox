@@ -1,0 +1,80 @@
+<view class="page-root {{themeClass}}" bindtouchstart="onPageTouchStart" bindtouchend="onPageTouchEnd">
+  <view class="safe-top"></view>
+
+  <view class="page-header">
+    <view class="page-header__main">
+      <view class="page-title page-title--compact">Settings</view>
+      <view class="page-subtitle">Configure the fixed page, appearance, desktop names, and local data.</view>
+    </view>
+  </view>
+
+  <view class="section-label">THEME</view>
+  <view class="theme-grid">
+    <view wx:for="{{themes}}" wx:key="id" class="surface-card theme-card {{item.activeClass}}" data-id="{{item.id}}" bindtap="onThemePick">
+      <view class="theme-card__preview">
+        <view class="theme-card__swatch" style="background: {{item.dark}};"></view>
+        <view class="theme-card__swatch theme-card__swatch--accent" style="background: {{item.color}};"></view>
+      </view>
+      <view class="theme-card__title">{{item.name}}</view>
+      <view class="theme-card__subtitle">{{item.subname}}</view>
+    </view>
+  </view>
+
+  <view class="section-label {{fixedPageLabelClass}}">FIXED PAGE</view>
+  <view class="surface-card field-card {{fixedPageSectionClass}}">
+    <view class="field-label">Pinned fixed-page URL</view>
+    <input class="inline-input settings-inline-input" placeholder="https://example.com/dashboard" placeholder-class="inline-input-placeholder" value="{{fixedPageUrlDraft}}" bindinput="onFixedPageInput" />
+    <view class="helper-text">Only one fixed http(s) page is kept here.</view>
+    <view wx:if="{{fixedPageConfigured}}" class="helper-text">Current fixed page: {{fixedPageHost}}</view>
+    <view class="btn-row">
+      <button class="primary-btn" bindtap="onSaveFixedPage">Save URL</button>
+      <button class="secondary-btn" bindtap="onClearFixedPage">Clear</button>
+    </view>
+  </view>
+
+  <view class="section-label">PAGE ORDER</view>
+  <view class="surface-card field-card">
+    <view class="helper-text settings-order-helper">Adjust the order of `Home 1`, `Home 2`, and `Fixed Page`. The first item becomes the launch page and the Dock order updates with it.</view>
+    <view wx:for="{{pageOrderItems}}" wx:key="key" class="settings-order-row">
+      <view class="settings-order-main">
+        <view class="settings-order-title">{{item.title}}</view>
+        <view class="settings-order-subtitle">{{item.subtitle}}</view>
+      </view>
+      <view class="settings-order-actions">
+        <view class="order-action" data-key="{{item.key}}" data-direction="up" bindtap="onMovePageOrder">↑</view>
+        <view class="order-action" data-key="{{item.key}}" data-direction="down" bindtap="onMovePageOrder">↓</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section-label">PAGE NAMES</view>
+  <view class="surface-card field-card">
+    <view class="field-label">Home 1 label</view>
+    <input class="inline-input" value="{{pageNameHome1}}" bindinput="onHome1Input" />
+    <view class="field-label field-label--gap">Home 2 label</view>
+    <input class="inline-input" value="{{pageNameHome2}}" bindinput="onHome2Input" />
+    <view class="btn-row">
+      <button class="primary-btn" bindtap="onSavePageNames">Save names</button>
+    </view>
+  </view>
+
+  <view class="section-label">EXPORT</view>
+  <view class="surface-card field-card">
+    <view class="field-label">Local JSON backup</view>
+    <textarea class="multiline-input settings-textarea" value="{{exportText}}" disabled></textarea>
+    <view class="btn-row">
+      <button class="secondary-btn" bindtap="onCopyExport">Copy export</button>
+    </view>
+  </view>
+
+  <view class="section-label">IMPORT</view>
+  <view class="surface-card field-card">
+    <view class="field-label">Paste exported JSON</view>
+    <textarea class="multiline-input settings-textarea" placeholder="Paste MagicBox export JSON here" placeholder-class="multiline-input-placeholder" value="{{importText}}" bindinput="onImportInput"></textarea>
+    <view class="btn-row">
+      <button class="primary-btn" bindtap="onImportState">Import JSON</button>
+      <button class="danger-btn" bindtap="onResetState">Reset state</button>
+    </view>
+    <view class="helper-text">WeChat personal mini program mode is kept as a management surface. Embedded arbitrary external sites are reserved for the Android standalone runtime.</view>
+  </view>
+</view>

@@ -1,0 +1,34 @@
+@import "../home1/index.wxss";
+
+.home2-page {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.home2-top-offset {
+  height: 104rpx;
+}
+
+.home2-content {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.home2-content .tile-grid {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  align-content: flex-start;
+}
+
+.home2-empty-grid {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

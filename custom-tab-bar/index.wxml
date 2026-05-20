@@ -1,0 +1,93 @@
+<view wx:if="{{!hidden}}" class="custom-tabbar-shell {{themeClass}}">
+  <view wx:if="{{visible}}" class="quick-add-overlay" bindtap="closePanel"></view>
+
+  <view wx:if="{{visible}}" class="quick-add-sheet-shell" catchtap="noop" catchtouchmove="noop">
+    <view class="quick-add-sheet">
+      <view class="quick-add-sheet__grabber"></view>
+      <view class="quick-add-sheet__header">
+        <view class="quick-add-sheet__header-main">
+          <view class="quick-add-sheet__title">{{formMode === 'edit' ? 'Edit' : 'Add'}}</view>
+          <view class="quick-add-sheet__subtitle">{{formMode === 'edit' ? 'Update this shortcut and save it back to MagicBox.' : 'Save a website, deep link, or mini program shortcut.'}}</view>
+        </view>
+        <view class="quick-add-sheet__close" bindtap="closePanel">x</view>
+      </view>
+
+      <scroll-view class="quick-add-sheet__body" scroll-y="true" show-scrollbar="false">
+        <view class="surface-card field-card">
+          <view class="field-label">Title</view>
+          <input class="inline-input" placeholder="Google Docs" placeholder-class="inline-input-placeholder" value="{{title}}" bindinput="onTitleInput" />
+        </view>
+
+        <view class="surface-card field-card">
+          <view class="field-label">Link or deep link</view>
+          <textarea class="multiline-input quick-add-textarea" placeholder="https://example.com or app://..." placeholder-class="multiline-input-placeholder" value="{{url}}" bindinput="onUrlInput"></textarea>
+          <view class="helper-text">{{detectedInfo}} - Badge {{detectedBadge}}</view>
+        </view>
+
+        <view class="section-label quick-add-section">TYPE</view>
+        <view class="segmented">
+          <view class="segmented__item {{typeClassWeb}}" data-type="web" bindtap="onPickType">Web</view>
+          <view class="segmented__item {{typeClassApp}}" data-type="app" bindtap="onPickType">App</view>
+          <view class="segmented__item {{typeClassMini}}" data-type="miniProgram" bindtap="onPickType">Mini</view>
+        </view>
+
+        <view class="section-label quick-add-section">DESKTOP</view>
+        <view class="segmented">
+          <view class="segmented__item {{desktopClassHome1}}" data-desktop="home1" bindtap="onPickDesktop">{{home1Label}}</view>
+          <view class="segmented__item {{desktopClassHome2}}" data-desktop="home2" bindtap="onPickDesktop">{{home2Label}}</view>
+        </view>
+
+        <view class="surface-card field-card">
+          <view class="field-label">Folder destination</view>
+          <view class="quick-add-picker" bindtap="onPickFolder">
+            <view class="quick-add-picker__value">{{selectedFolderLabel}}</view>
+            <view class="quick-add-picker__action">Choose</view>
+          </view>
+        </view>
+
+        <view class="section-label quick-add-section">COLOR</view>
+        <view class="surface-card field-card">
+          <view class="swatch-row">
+            <view wx:for="{{colorItems}}" wx:key="value" class="swatch {{item.activeClass}}" style="background: {{item.value}};" data-color="{{item.value}}" bindtap="onPickColor"></view>
+          </view>
+        </view>
+
+        <view class="surface-card field-card">
+          <view class="field-label">Note</view>
+          <textarea class="multiline-input quick-add-textarea" placeholder="Optional note, account, or use case" placeholder-class="multiline-input-placeholder" value="{{note}}" bindinput="onNoteInput"></textarea>
+        </view>
+
+        <view class="btn-row quick-add-actions">
+          <button class="primary-btn" bindtap="onSaveItem">{{formMode === 'edit' ? 'Update item' : 'Save item'}}</button>
+        </view>
+
+        <view class="section-label quick-add-section">NEW FOLDER</view>
+        <view class="surface-card field-card">
+          <view class="field-label">Create a folder on the selected desktop</view>
+          <input class="inline-input" placeholder="Workbench" placeholder-class="inline-input-placeholder" value="{{createFolderTitle}}" bindinput="onFolderTitleInput" />
+          <view class="btn-row">
+            <button class="secondary-btn" bindtap="onCreateFolder">Create folder</button>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+
+  <view class="custom-tabbar">
+    <view wx:for="{{leftTabItems}}" wx:key="key" class="{{item.itemClass}}" data-key="{{item.key}}" bindtap="onTabTap">
+      <image class="custom-tabbar__icon" src="{{item.iconPath}}" mode="aspectFit"></image>
+      <view class="{{item.labelClass}}">{{item.label}}</view>
+    </view>
+
+    <view class="custom-tabbar__center">
+      <view class="custom-tabbar__add" bindtap="openPanel">
+        <view class="custom-tabbar__add-plus">+</view>
+      </view>
+    </view>
+
+    <view wx:for="{{rightTabItems}}" wx:key="key" class="{{item.itemClass}}" data-key="{{item.key}}" bindtap="onTabTap">
+      <image class="custom-tabbar__icon" src="{{item.iconPath}}" mode="aspectFit"></image>
+      <view class="{{item.labelClass}}">{{item.label}}</view>
+    </view>
+  </view>
+</view>

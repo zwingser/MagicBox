@@ -1,0 +1,67 @@
+<view class="page-root {{themeClass}}" bindtouchstart="onPageTouchStart" bindtouchend="onPageTouchEnd">
+  <view class="safe-top"></view>
+
+  <view class="page-header">
+    <view class="page-header__main">
+      <view class="page-title page-title--compact">Add</view>
+      <view class="page-subtitle">Create a new website, app deep link, or mini program shortcut.</view>
+    </view>
+  </view>
+
+  <view class="surface-card field-card">
+    <view class="field-label">Title</view>
+    <input class="inline-input" placeholder="Google Docs" placeholder-class="inline-input-placeholder" value="{{title}}" bindinput="onTitleInput" />
+  </view>
+
+  <view class="surface-card field-card">
+    <view class="field-label">Link or deep link</view>
+    <textarea class="multiline-input" placeholder="https://example.com or app://..." placeholder-class="multiline-input-placeholder" value="{{url}}" bindinput="onUrlInput"></textarea>
+    <view class="helper-text">{{detectedInfo}} - Badge {{detectedBadge}}</view>
+  </view>
+
+  <view class="section-label">TYPE</view>
+  <view class="segmented">
+    <view class="segmented__item {{typeClassWeb}}" data-type="web" bindtap="onPickType">Web</view>
+    <view class="segmented__item {{typeClassApp}}" data-type="app" bindtap="onPickType">App</view>
+    <view class="segmented__item {{typeClassMini}}" data-type="miniProgram" bindtap="onPickType">Mini</view>
+  </view>
+
+  <view class="section-label">DESKTOP</view>
+  <view class="segmented">
+    <view class="segmented__item {{desktopClassHome1}}" data-desktop="home1" bindtap="onPickDesktop">{{home1Label}}</view>
+    <view class="segmented__item {{desktopClassHome2}}" data-desktop="home2" bindtap="onPickDesktop">{{home2Label}}</view>
+  </view>
+
+  <view class="surface-card field-card">
+    <view class="field-label">Folder destination</view>
+    <view class="picker-row" bindtap="onPickFolder">
+      <view class="picker-row__value">{{selectedFolderLabel}}</view>
+      <view class="picker-row__action">Choose</view>
+    </view>
+  </view>
+
+  <view class="section-label">COLOR</view>
+  <view class="surface-card field-card">
+    <view class="swatch-row">
+      <view wx:for="{{colorItems}}" wx:key="value" class="swatch {{item.activeClass}}" style="background: {{item.value}};" data-color="{{item.value}}" bindtap="onPickColor"></view>
+    </view>
+  </view>
+
+  <view class="surface-card field-card">
+    <view class="field-label">Note</view>
+    <textarea class="multiline-input" placeholder="Optional note, account, or use case" placeholder-class="multiline-input-placeholder" value="{{note}}" bindinput="onNoteInput"></textarea>
+  </view>
+
+  <view class="btn-row">
+    <button class="primary-btn" bindtap="onSaveItem">Save item</button>
+  </view>
+
+  <view class="section-label">NEW FOLDER</view>
+  <view class="surface-card field-card">
+    <view class="field-label">Create a folder on the current desktop</view>
+    <input class="inline-input" placeholder="Workbench" placeholder-class="inline-input-placeholder" value="{{createFolderTitle}}" bindinput="onFolderTitleInput" />
+    <view class="btn-row">
+      <button class="secondary-btn" bindtap="onCreateFolder">Create folder</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,52 @@
+{
+  "pages": [
+    "pages/home1/index",
+    "pages/home2/index",
+    "pages/fixed-page/index",
+    "pages/settings/index",
+    "pages/add/index",
+    "pages/folder/index",
+    "pages/browser/index"
+  ],
+  "window": {
+    "backgroundColor": "#131315",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#131315",
+    "navigationBarTextStyle": "white",
+    "navigationStyle": "custom"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#8E97AA",
+    "selectedColor": "#4B8EFF",
+    "backgroundColor": "#18181C",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/home1/index",
+        "text": "Home 1",
+        "iconPath": "assets/tabbar/home1-default.png",
+        "selectedIconPath": "assets/tabbar/home1-selected.png"
+      },
+      {
+        "pagePath": "pages/home2/index",
+        "text": "Home 2",
+        "iconPath": "assets/tabbar/home2-default.png",
+        "selectedIconPath": "assets/tabbar/home2-selected.png"
+      },
+      {
+        "pagePath": "pages/fixed-page/index",
+        "text": "View",
+        "iconPath": "assets/tabbar/fixed-default.png",
+        "selectedIconPath": "assets/tabbar/fixed-selected.png"
+      },
+      {
+        "pagePath": "pages/settings/index",
+        "text": "Settings",
+        "iconPath": "assets/tabbar/settings-default.png",
+        "selectedIconPath": "assets/tabbar/settings-selected.png"
+      }
+    ]
+  },
+  "style": "v2"
+}

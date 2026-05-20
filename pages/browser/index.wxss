@@ -1,0 +1,121 @@
+.browser-web-shell {
+  position: relative;
+  min-height: 100vh;
+}
+
+.browser-fixed-dock-shell {
+  position: fixed;
+  left: 18rpx;
+  right: 18rpx;
+  bottom: calc(env(safe-area-inset-bottom) + 18rpx);
+  z-index: 40;
+}
+
+.browser-fixed-back-shell {
+  position: fixed;
+  top: calc(env(safe-area-inset-top) + 18rpx);
+  left: 18rpx;
+  z-index: 42;
+}
+
+.browser-fixed-back {
+  width: 84rpx;
+  height: 84rpx;
+  border-radius: 26rpx;
+  background: rgba(24, 24, 28, 0.92);
+  border: 1rpx solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12rpx 34rpx rgba(0, 0, 0, 0.24);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.browser-fixed-back__icon {
+  margin-top: -2rpx;
+  color: #e5e1e4;
+  font-size: 40rpx;
+  line-height: 1;
+  font-weight: 600;
+}
+
+.browser-fixed-dock {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8rpx;
+  padding: 14rpx 18rpx 16rpx;
+  border-radius: 36rpx;
+  background: rgba(24, 24, 28, 0.96);
+  border: 1rpx solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 -12rpx 34rpx rgba(0, 0, 0, 0.24);
+}
+
+.browser-fixed-dock__item,
+.browser-fixed-dock__center {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.browser-fixed-dock__item {
+  height: 82rpx;
+  border-radius: 26rpx;
+}
+
+.browser-fixed-dock__item--active {
+  background: rgba(75, 142, 255, 0.14);
+}
+
+.browser-fixed-dock__icon {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+.browser-fixed-dock__center {
+  transform: translateY(-20rpx);
+}
+
+.browser-fixed-dock__add {
+  width: 108rpx;
+  height: 108rpx;
+  border-radius: 999rpx;
+  background: #adc6ff;
+  border: 6rpx solid rgba(24, 24, 28, 0.96);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 22rpx 48rpx rgba(173, 198, 255, 0.30),
+    0 0 0 8rpx rgba(24, 24, 28, 0.72);
+}
+
+.browser-fixed-dock__plus {
+  margin-top: -4rpx;
+  color: #163c72;
+  font-size: 66rpx;
+  line-height: 1;
+}
+
+.browser-card {
+  padding: 30rpx;
+}
+
+.browser-card__label {
+  color: var(--muted);
+  font-size: 22rpx;
+  margin-bottom: 12rpx;
+}
+
+.browser-card__url {
+  font-size: 26rpx;
+  line-height: 1.6;
+  color: var(--text);
+  word-break: break-all;
+}
+
+.browser-helper {
+  margin-top: 18rpx;
+}

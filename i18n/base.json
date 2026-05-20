@@ -1,0 +1,11 @@
+{
+  "ios": {
+    "name": "MagicBox"
+  },
+  "android": {
+    "name": "MagicBox"
+  },
+  "common": {
+    "name": "MagicBox"
+  }
+}

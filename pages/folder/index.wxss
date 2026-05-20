@@ -1,0 +1,35 @@
+.folder-header__main {
+  padding: 0 18rpx;
+  text-align: center;
+}
+
+.folder-back {
+  padding: 0;
+  white-space: nowrap;
+}
+
+.folder-summary {
+  padding: 28rpx;
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  margin-bottom: 24rpx;
+}
+
+.folder-summary__text {
+  min-width: 0;
+  flex: 1;
+}
+
+.folder-summary__title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.folder-summary__meta {
+  margin-top: 8rpx;
+  color: var(--muted);
+  font-size: 22rpx;
+  line-height: 1.5;
+}

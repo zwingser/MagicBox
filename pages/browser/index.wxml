@@ -1,0 +1,56 @@
+<view wx:if="{{useWebView}}" class="browser-web-shell">
+  <web-view src="{{url}}" bindload="onWebViewLoad" binderror="onWebViewError"></web-view>
+
+  <cover-view wx:if="{{fixedBrowserMode && showFixedBackButton}}" class="browser-fixed-back-shell">
+    <cover-view class="browser-fixed-back" bindtap="onFixedBackTap">
+      <cover-view class="browser-fixed-back__icon">{{backLabel}}</cover-view>
+    </cover-view>
+  </cover-view>
+
+  <cover-view wx:if="{{fixedBrowserMode && showFixedChrome}}" class="browser-fixed-dock-shell">
+    <cover-view class="browser-fixed-dock">
+      <cover-view wx:for="{{leftDockItems}}" wx:key="key" class="{{item.itemClass}}" data-key="{{item.key}}" bindtap="onFixedDockTap">
+        <cover-image class="browser-fixed-dock__icon" src="{{item.iconPath}}"></cover-image>
+      </cover-view>
+
+      <cover-view class="browser-fixed-dock__center">
+        <cover-view class="browser-fixed-dock__add" data-key="add" bindtap="onFixedDockTap">
+          <cover-view class="browser-fixed-dock__plus">+</cover-view>
+        </cover-view>
+      </cover-view>
+
+      <cover-view wx:for="{{rightDockItems}}" wx:key="key" class="{{item.itemClass}}" data-key="{{item.key}}" bindtap="onFixedDockTap">
+        <cover-image class="browser-fixed-dock__icon" src="{{item.iconPath}}"></cover-image>
+      </cover-view>
+    </cover-view>
+  </cover-view>
+</view>
+
+<view wx:else class="page-root {{themeClass}} page-root--modal">
+  <view class="safe-top"></view>
+
+  <view class="page-header">
+    <view class="page-header__main">
+      <view class="page-title page-title--compact">{{title}}</view>
+      <view class="page-subtitle">{{runtimeLabel}}</view>
+    </view>
+  </view>
+
+  <view class="surface-card browser-card">
+    <view class="browser-card__label">Target URL</view>
+    <view class="browser-card__url">{{url}}</view>
+    <view class="helper-text">{{restrictionText}}</view>
+  </view>
+
+  <view wx:if="{{canPreview}}" class="btn-row">
+    <button class="primary-btn" bindtap="onTryPreview">Open preview</button>
+    <button class="secondary-btn" bindtap="onOpenExternal">System browser</button>
+  </view>
+
+  <view wx:else class="btn-row">
+    <button class="primary-btn" bindtap="onOpenExternal">Open external</button>
+    <button class="secondary-btn" bindtap="onCopyLink">Copy link</button>
+  </view>
+
+  <view wx:if="{{canPreview}}" class="helper-text browser-helper">If preview is blocked on the current runtime, use the system browser button as a fallback.</view>
+</view>

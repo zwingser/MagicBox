@@ -1,0 +1,52 @@
+<view class="dock-shell {{shellClass}}">
+  <view class="dock">
+    <view class="dock__item {{home1Class}}" bindtap="goHome1">
+      <view class="dock__icon">
+        <view class="dock-glyph dock-glyph--grid">
+          <view class="dock-glyph__cell"></view>
+          <view class="dock-glyph__cell"></view>
+          <view class="dock-glyph__cell"></view>
+          <view class="dock-glyph__cell"></view>
+        </view>
+      </view>
+    </view>
+    <view class="dock__item {{home2Class}}" bindtap="goHome2">
+      <view class="dock__icon">
+        <view class="dock-glyph dock-glyph--panels">
+          <view class="dock-glyph__panel dock-glyph__panel--wide"></view>
+          <view class="dock-glyph__panel-row">
+            <view class="dock-glyph__panel dock-glyph__panel--small"></view>
+            <view class="dock-glyph__panel dock-glyph__panel--small"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="dock__center">
+      <view class="dock__add" bindtap="goAdd">+</view>
+    </view>
+    <view class="dock__item {{fixedPageClass}}" bindtap="goFixedPage">
+      <view class="dock__icon">
+        <view class="dock-glyph dock-glyph--browser">
+          <view class="dock-glyph__browser-top"></view>
+          <view class="dock-glyph__browser-line dock-glyph__browser-line--one"></view>
+          <view class="dock-glyph__browser-line dock-glyph__browser-line--two"></view>
+        </view>
+      </view>
+    </view>
+    <view class="dock__item {{settingsClass}}" bindtap="goSettings">
+      <view class="dock__icon">
+        <view class="dock-glyph dock-glyph--sliders">
+          <view class="dock-glyph__slider">
+            <view class="dock-glyph__knob dock-glyph__knob--one"></view>
+          </view>
+          <view class="dock-glyph__slider">
+            <view class="dock-glyph__knob dock-glyph__knob--two"></view>
+          </view>
+          <view class="dock-glyph__slider">
+            <view class="dock-glyph__knob dock-glyph__knob--three"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

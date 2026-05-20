@@ -1,0 +1,69 @@
+<import src="../../templates/home-panel.wxml" />
+
+<view class="page-root home1-page {{themeClass}}" bindtouchstart="onPageTouchStart" bindtouchmove="onPageTouchMove" bindtouchend="onPageTouchEnd" bindtouchcancel="onPageTouchCancel">
+  <view class="safe-top"></view>
+  <view class="home1-top-offset"></view>
+
+  <view class="home1-banner-shell">
+    <block wx:if="{{hasRecentEntries}}">
+      <swiper class="recent-swiper" circular="{{recentLoopEnabled}}" current="{{recentCurrent}}" previous-margin="0rpx" next-margin="0rpx" bindchange="onRecentChange" catchtouchstart="onGestureBlock" catchtouchmove="onGestureBlock" catchtouchend="onGestureBlock">
+        <swiper-item wx:for="{{recentEntries}}" wx:key="historyId">
+          <view class="glass-card feature-card recent-card" data-index="{{index}}" bindtap="onRecentTap">
+            <view class="feature-card__badge" style="background: {{item.color}};">{{item.badge}}</view>
+            <view class="feature-card__title">{{item.title}}</view>
+            <view class="feature-card__meta">{{item.subtitle}}</view>
+          </view>
+        </swiper-item>
+      </swiper>
+      <view wx:if="{{showRecentIndicators}}" class="recent-indicators">
+        <view wx:for="{{recentIndicators}}" wx:key="id" class="recent-indicator {{item.activeClass}}"></view>
+      </view>
+    </block>
+    <view wx:else class="glass-card empty-card home1-empty-recent">No recent open yet.</view>
+  </view>
+
+  <view class="home1-desktop-shell">
+    <view class="section-label home1-desktop-label">DESKTOP</view>
+    <view class="helper-text home-helper">Tap to open. Long press a tile to move, file into a folder, or delete it.</view>
+
+    <view wx:if="{{nodes.length}}" class="tile-grid home1-tile-grid">
+      <view wx:for="{{nodes}}" wx:key="id" class="tile-slot">
+        <view
+          class="tile-card tile-card--interactive {{dragActive && dragSourceId === item.id ? 'tile-card--drag-source' : ''}} {{dragActive && dragTargetId === item.id ? 'tile-card--drag-target' : ''}}"
+          data-id="{{item.id}}"
+          catchtouchstart="onNodeTouchStart"
+          catchtouchmove="onNodeTouchMove"
+          catchtouchend="onNodeTouchEnd"
+          catchtouchcancel="onNodeTouchCancel"
+          bindtap="onNodeTap"
+        >
+          <view wx:if="{{item.isFolder}}" class="folder-preview folder-preview--interactive">
+            <view wx:for="{{item.preview}}" wx:key="index" class="folder-preview__cell" style="background: {{item.color}};">{{item.badge}}</view>
+            <view wx:if="{{!item.hasPreview}}" class="folder-preview__empty">+</view>
+          </view>
+          <view wx:else class="tile-card__icon" style="background: {{item.color}};">{{item.badge}}</view>
+          <view class="tile-card__title">{{item.title}}</view>
+          <view class="tile-card__hint">{{item.metaLabel}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view wx:else class="glass-card empty-card home1-empty-grid">No items yet.</view>
+  </view>
+
+  <view wx:if="{{dragActive}}" class="drag-ghost" style="{{dragGhostStyle}}">
+    <view wx:if="{{dragHint}}" class="drag-ghost__hint">{{dragHint}}</view>
+    <view class="tile-card tile-card--ghost">
+      <view class="tile-card__icon" style="background: {{dragGhostColor}};">{{dragGhostBadge}}</view>
+      <view class="tile-card__title">{{dragGhostTitle}}</view>
+    </view>
+  </view>
+
+  <view wx:if="{{pageTransitionVisible}}" class="page-transition-shell" catchtouchstart="onGestureBlock" catchtouchmove="onGestureBlock" catchtouchend="onGestureBlock" catchtouchcancel="onGestureBlock">
+    <view class="page-transition-track" style="{{pageTransitionTrackStyle}}">
+      <view wx:for="{{pageTransitionPanels}}" wx:key="desktopKey" class="page-transition-panel">
+        <template is="homePanelPreview" data="{{panel: item}}" />
+      </view>
+    </view>
+  </view>
+</view>

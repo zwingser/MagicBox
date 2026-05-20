@@ -1,0 +1,168 @@
+<template name="quickAdd">
+  <cover-view wx:if="{{quickAddOverlayMode === 'cover'}}" class="quick-add-fab-shell" bindtap="openQuickAddPanel">
+    <cover-view class="quick-add-fab">
+      <cover-view class="quick-add-fab__plus">+</cover-view>
+    </cover-view>
+  </cover-view>
+
+  <view wx:else class="quick-add-fab-shell" bindtap="openQuickAddPanel">
+    <view class="quick-add-fab">
+      <view class="quick-add-fab__plus">+</view>
+    </view>
+  </view>
+
+  <page-container
+    wx:if="{{quickAddOverlayMode === 'cover'}}"
+    show="{{quickAddVisible}}"
+    overlay="{{true}}"
+    position="bottom"
+    round="{{true}}"
+    close-on-slide-down="{{true}}"
+    bind:clickoverlay="closeQuickAddPanel"
+    bind:afterleave="onQuickAddAfterLeave"
+  >
+    <view class="quick-add-sheet {{themeClass}}" catchtap="onQuickAddNoop" catchtouchstart="onQuickAddNoop" catchtouchmove="onQuickAddNoop" catchtouchend="onQuickAddNoop">
+      <view class="quick-add-sheet__grabber"></view>
+      <view class="quick-add-sheet__header">
+        <view class="quick-add-sheet__header-main">
+          <view class="quick-add-sheet__title">Add</view>
+          <view class="quick-add-sheet__subtitle">Save a website, deep link, or mini program shortcut.</view>
+        </view>
+        <view class="quick-add-sheet__close" bindtap="closeQuickAddPanel">x</view>
+      </view>
+
+      <scroll-view class="quick-add-sheet__body" scroll-y="true" show-scrollbar="false">
+        <view class="surface-card field-card">
+          <view class="field-label">Title</view>
+          <input class="inline-input" placeholder="Google Docs" placeholder-class="inline-input-placeholder" value="{{quickAddTitle}}" bindinput="onQuickAddTitleInput" />
+        </view>
+
+        <view class="surface-card field-card">
+          <view class="field-label">Link or deep link</view>
+          <textarea class="multiline-input quick-add-textarea" placeholder="https://example.com or app://..." placeholder-class="multiline-input-placeholder" value="{{quickAddUrl}}" bindinput="onQuickAddUrlInput"></textarea>
+          <view class="helper-text">{{quickAddDetectedInfo}} - Badge {{quickAddDetectedBadge}}</view>
+        </view>
+
+        <view class="section-label quick-add-section">TYPE</view>
+        <view class="segmented">
+          <view class="segmented__item {{quickAddTypeClassWeb}}" data-type="web" bindtap="onQuickAddPickType">Web</view>
+          <view class="segmented__item {{quickAddTypeClassApp}}" data-type="app" bindtap="onQuickAddPickType">App</view>
+          <view class="segmented__item {{quickAddTypeClassMini}}" data-type="miniProgram" bindtap="onQuickAddPickType">Mini</view>
+        </view>
+
+        <view class="section-label quick-add-section">DESKTOP</view>
+        <view class="segmented">
+          <view class="segmented__item {{quickAddDesktopClassHome1}}" data-desktop="home1" bindtap="onQuickAddPickDesktop">{{home1Label}}</view>
+          <view class="segmented__item {{quickAddDesktopClassHome2}}" data-desktop="home2" bindtap="onQuickAddPickDesktop">{{home2Label}}</view>
+        </view>
+
+        <view class="surface-card field-card">
+          <view class="field-label">Folder destination</view>
+          <view class="quick-add-picker" bindtap="onQuickAddPickFolder">
+            <view class="quick-add-picker__value">{{quickAddSelectedFolderLabel}}</view>
+            <view class="quick-add-picker__action">Choose</view>
+          </view>
+        </view>
+
+        <view class="section-label quick-add-section">COLOR</view>
+        <view class="surface-card field-card">
+          <view class="swatch-row">
+            <view wx:for="{{quickAddColorItems}}" wx:key="value" class="swatch {{item.activeClass}}" style="background: {{item.value}};" data-color="{{item.value}}" bindtap="onQuickAddPickColor"></view>
+          </view>
+        </view>
+
+        <view class="surface-card field-card">
+          <view class="field-label">Note</view>
+          <textarea class="multiline-input quick-add-textarea" placeholder="Optional note, account, or use case" placeholder-class="multiline-input-placeholder" value="{{quickAddNote}}" bindinput="onQuickAddNoteInput"></textarea>
+        </view>
+
+        <view class="btn-row quick-add-actions">
+          <button class="primary-btn" bindtap="onQuickAddSaveItem">Save item</button>
+        </view>
+
+        <view class="section-label quick-add-section">NEW FOLDER</view>
+        <view class="surface-card field-card">
+          <view class="field-label">Create a folder on the selected desktop</view>
+          <input class="inline-input" placeholder="Workbench" placeholder-class="inline-input-placeholder" value="{{quickAddCreateFolderTitle}}" bindinput="onQuickAddFolderTitleInput" />
+          <view class="btn-row">
+            <button class="secondary-btn" bindtap="onQuickAddCreateFolder">Create folder</button>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </page-container>
+
+  <view wx:if="{{quickAddOverlayMode !== 'cover' && quickAddVisible}}" class="quick-add-overlay" bindtap="closeQuickAddPanel"></view>
+
+  <view wx:if="{{quickAddOverlayMode !== 'cover' && quickAddVisible}}" class="quick-add-sheet-shell" catchtap="onQuickAddNoop" catchtouchmove="onQuickAddNoop">
+    <view class="quick-add-sheet {{themeClass}}">
+      <view class="quick-add-sheet__grabber"></view>
+      <view class="quick-add-sheet__header">
+        <view class="quick-add-sheet__header-main">
+          <view class="quick-add-sheet__title">Add</view>
+          <view class="quick-add-sheet__subtitle">Save a website, deep link, or mini program shortcut.</view>
+        </view>
+        <view class="quick-add-sheet__close" bindtap="closeQuickAddPanel">x</view>
+      </view>
+
+      <scroll-view class="quick-add-sheet__body" scroll-y="true" show-scrollbar="false">
+        <view class="surface-card field-card">
+          <view class="field-label">Title</view>
+          <input class="inline-input" placeholder="Google Docs" placeholder-class="inline-input-placeholder" value="{{quickAddTitle}}" bindinput="onQuickAddTitleInput" />
+        </view>
+
+        <view class="surface-card field-card">
+          <view class="field-label">Link or deep link</view>
+          <textarea class="multiline-input quick-add-textarea" placeholder="https://example.com or app://..." placeholder-class="multiline-input-placeholder" value="{{quickAddUrl}}" bindinput="onQuickAddUrlInput"></textarea>
+          <view class="helper-text">{{quickAddDetectedInfo}} - Badge {{quickAddDetectedBadge}}</view>
+        </view>
+
+        <view class="section-label quick-add-section">TYPE</view>
+        <view class="segmented">
+          <view class="segmented__item {{quickAddTypeClassWeb}}" data-type="web" bindtap="onQuickAddPickType">Web</view>
+          <view class="segmented__item {{quickAddTypeClassApp}}" data-type="app" bindtap="onQuickAddPickType">App</view>
+          <view class="segmented__item {{quickAddTypeClassMini}}" data-type="miniProgram" bindtap="onQuickAddPickType">Mini</view>
+        </view>
+
+        <view class="section-label quick-add-section">DESKTOP</view>
+        <view class="segmented">
+          <view class="segmented__item {{quickAddDesktopClassHome1}}" data-desktop="home1" bindtap="onQuickAddPickDesktop">{{home1Label}}</view>
+          <view class="segmented__item {{quickAddDesktopClassHome2}}" data-desktop="home2" bindtap="onQuickAddPickDesktop">{{home2Label}}</view>
+        </view>
+
+        <view class="surface-card field-card">
+          <view class="field-label">Folder destination</view>
+          <view class="quick-add-picker" bindtap="onQuickAddPickFolder">
+            <view class="quick-add-picker__value">{{quickAddSelectedFolderLabel}}</view>
+            <view class="quick-add-picker__action">Choose</view>
+          </view>
+        </view>
+
+        <view class="section-label quick-add-section">COLOR</view>
+        <view class="surface-card field-card">
+          <view class="swatch-row">
+            <view wx:for="{{quickAddColorItems}}" wx:key="value" class="swatch {{item.activeClass}}" style="background: {{item.value}};" data-color="{{item.value}}" bindtap="onQuickAddPickColor"></view>
+          </view>
+        </view>
+
+        <view class="surface-card field-card">
+          <view class="field-label">Note</view>
+          <textarea class="multiline-input quick-add-textarea" placeholder="Optional note, account, or use case" placeholder-class="multiline-input-placeholder" value="{{quickAddNote}}" bindinput="onQuickAddNoteInput"></textarea>
+        </view>
+
+        <view class="btn-row quick-add-actions">
+          <button class="primary-btn" bindtap="onQuickAddSaveItem">Save item</button>
+        </view>
+
+        <view class="section-label quick-add-section">NEW FOLDER</view>
+        <view class="surface-card field-card">
+          <view class="field-label">Create a folder on the selected desktop</view>
+          <input class="inline-input" placeholder="Workbench" placeholder-class="inline-input-placeholder" value="{{quickAddCreateFolderTitle}}" bindinput="onQuickAddFolderTitleInput" />
+          <view class="btn-row">
+            <button class="secondary-btn" bindtap="onQuickAddCreateFolder">Create folder</button>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</template>

@@ -1,0 +1,45 @@
+<template name="homePanelPreview">
+  <view class="home-transition-panel">
+    <view class="safe-top"></view>
+    <view class="{{panel.topOffsetClass}}"></view>
+
+    <view wx:if="{{panel.showRecent}}" class="home1-banner-shell">
+      <block wx:if="{{panel.hasRecentEntries}}">
+        <swiper class="recent-swiper" circular="{{panel.recentLoopEnabled}}" current="{{panel.recentCurrent}}" previous-margin="0rpx" next-margin="0rpx" disable-touch="{{true}}">
+          <swiper-item wx:for="{{panel.recentEntries}}" wx:key="historyId">
+            <view class="glass-card feature-card recent-card">
+              <view class="feature-card__badge" style="background: {{item.color}};">{{item.badge}}</view>
+              <view class="feature-card__title">{{item.title}}</view>
+              <view class="feature-card__meta">{{item.subtitle}}</view>
+            </view>
+          </swiper-item>
+        </swiper>
+        <view wx:if="{{panel.showRecentIndicators}}" class="recent-indicators">
+          <view wx:for="{{panel.recentIndicators}}" wx:key="id" class="recent-indicator {{item.activeClass}}"></view>
+        </view>
+      </block>
+      <view wx:else class="glass-card empty-card home1-empty-recent">No recent open yet.</view>
+    </view>
+
+    <view class="{{panel.showDesktopChrome ? 'home1-desktop-shell' : 'home-transition-panel__content'}}">
+      <view wx:if="{{panel.showDesktopChrome}}" class="section-label home1-desktop-label">DESKTOP</view>
+      <view wx:if="{{panel.showDesktopChrome}}" class="helper-text home-helper">Tap to open. Long press a tile to move, file into a folder, or delete it.</view>
+
+      <view wx:if="{{panel.nodes.length}}" class="{{panel.gridClass}}">
+        <view wx:for="{{panel.nodes}}" wx:key="id" class="tile-slot">
+          <view class="tile-card tile-card--interactive">
+            <view wx:if="{{item.isFolder}}" class="folder-preview folder-preview--interactive">
+              <view wx:for="{{item.preview}}" wx:key="index" class="folder-preview__cell" style="background: {{item.color}};">{{item.badge}}</view>
+              <view wx:if="{{!item.hasPreview}}" class="folder-preview__empty">+</view>
+            </view>
+            <view wx:else class="tile-card__icon" style="background: {{item.color}};">{{item.badge}}</view>
+            <view class="tile-card__title">{{item.title}}</view>
+            <view class="tile-card__hint">{{item.metaLabel}}</view>
+          </view>
+        </view>
+      </view>
+
+      <view wx:else class="{{panel.emptyClass}}">No items yet.</view>
+    </view>
+  </view>
+</template>

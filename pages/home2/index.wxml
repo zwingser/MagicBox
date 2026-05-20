@@ -1,0 +1,48 @@
+<import src="../../templates/home-panel.wxml" />
+
+<view class="page-root home2-page {{themeClass}}" bindtouchstart="onPageTouchStart" bindtouchmove="onPageTouchMove" bindtouchend="onPageTouchEnd" bindtouchcancel="onPageTouchCancel">
+  <view class="safe-top"></view>
+  <view class="home2-top-offset"></view>
+
+  <view class="home2-content">
+    <view wx:if="{{nodes.length}}" class="tile-grid">
+      <view wx:for="{{nodes}}" wx:key="id" class="tile-slot">
+        <view
+          class="tile-card tile-card--interactive {{dragActive && dragSourceId === item.id ? 'tile-card--drag-source' : ''}} {{dragActive && dragTargetId === item.id ? 'tile-card--drag-target' : ''}}"
+          data-id="{{item.id}}"
+          catchtouchstart="onNodeTouchStart"
+          catchtouchmove="onNodeTouchMove"
+          catchtouchend="onNodeTouchEnd"
+          catchtouchcancel="onNodeTouchCancel"
+          bindtap="onNodeTap"
+        >
+          <view wx:if="{{item.isFolder}}" class="folder-preview folder-preview--interactive">
+            <view wx:for="{{item.preview}}" wx:key="index" class="folder-preview__cell" style="background: {{item.color}};">{{item.badge}}</view>
+            <view wx:if="{{!item.hasPreview}}" class="folder-preview__empty">+</view>
+          </view>
+          <view wx:else class="tile-card__icon" style="background: {{item.color}};">{{item.badge}}</view>
+          <view class="tile-card__title">{{item.title}}</view>
+          <view class="tile-card__hint">{{item.metaLabel}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view wx:else class="glass-card empty-card home2-empty-grid">No items yet.</view>
+  </view>
+
+  <view wx:if="{{dragActive}}" class="drag-ghost" style="{{dragGhostStyle}}">
+    <view wx:if="{{dragHint}}" class="drag-ghost__hint">{{dragHint}}</view>
+    <view class="tile-card tile-card--ghost">
+      <view class="tile-card__icon" style="background: {{dragGhostColor}};">{{dragGhostBadge}}</view>
+      <view class="tile-card__title">{{dragGhostTitle}}</view>
+    </view>
+  </view>
+
+  <view wx:if="{{pageTransitionVisible}}" class="page-transition-shell" catchtouchstart="onGestureBlock" catchtouchmove="onGestureBlock" catchtouchend="onGestureBlock" catchtouchcancel="onGestureBlock">
+    <view class="page-transition-track" style="{{pageTransitionTrackStyle}}">
+      <view wx:for="{{pageTransitionPanels}}" wx:key="desktopKey" class="page-transition-panel">
+        <template is="homePanelPreview" data="{{panel: item}}" />
+      </view>
+    </view>
+  </view>
+</view>

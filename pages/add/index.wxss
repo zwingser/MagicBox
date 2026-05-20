@@ -1,0 +1,19 @@
+.picker-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18rpx;
+}
+
+.picker-row__value {
+  min-width: 0;
+  flex: 1;
+  color: var(--text);
+  font-size: 28rpx;
+}
+
+.picker-row__action {
+  color: var(--primary);
+  font-size: 24rpx;
+  font-weight: 600;
+}
