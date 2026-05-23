@@ -66,4 +66,8 @@
       </view>
     </view>
   </view>
+
+  <view wx:if="{{pageHandoffVisible}}" class="page-handoff-shell {{pageHandoffClass}}" catchtouchstart="onGestureBlock" catchtouchmove="onGestureBlock" catchtouchend="onGestureBlock" catchtouchcancel="onGestureBlock">
+    <template is="homePanelPreview" data="{{panel: pageHandoffPanel}}" />
+  </view>
 </view>

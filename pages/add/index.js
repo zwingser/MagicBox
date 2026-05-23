@@ -1,4 +1,5 @@
 var format = require('../../utils/format');
+var back = require('../../utils/back');
 var link = require('../../utils/link');
 var pageNav = require('../../utils/page-nav');
 var pageTools = require('../../utils/page-tools');
@@ -92,6 +93,14 @@ Page({
 
   onPageTouchEnd: function (event) {
     pageNav.handleTouchEnd(this, 'add', event);
+  },
+
+  onCustomBack: function () {
+    return back.handleTabBack('add');
+  },
+
+  onBackPress: function () {
+    return back.handleTabBack('add');
   },
 
   refreshDetection: function () {

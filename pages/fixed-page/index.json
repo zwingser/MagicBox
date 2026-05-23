@@ -2,6 +2,7 @@
   "disableScroll": true,
   "customNavigateBack": true,
   "navigationStyle": "custom",
+  "navigationBarTitleText": " ",
   "backgroundColor": "#131315",
   "backgroundTextStyle": "light"
 }

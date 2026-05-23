@@ -13,7 +13,8 @@
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#131315",
     "navigationBarTextStyle": "white",
-    "navigationStyle": "custom"
+    "navigationStyle": "custom",
+    "customNavigateBack": true
   },
   "tabBar": {
     "custom": true,

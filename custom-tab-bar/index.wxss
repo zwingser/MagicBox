@@ -82,7 +82,7 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: 8rpx;
-  padding: 16rpx 22rpx calc(env(safe-area-inset-bottom) + 16rpx);
+  padding: 0rpx 22rpx calc(env(safe-area-inset-bottom) + 0rpx);
   background: rgba(24, 24, 28, 0.96);
   border-top: 1rpx solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 -12rpx 34rpx rgba(0, 0, 0, 0.24);
@@ -116,10 +116,15 @@
 }
 
 .custom-tabbar__center {
-  transform: translateY(-30rpx);
+  position: relative;
+  height: 86rpx;
 }
 
 .custom-tabbar__add {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%) translateY(-30rpx);
   width: 124rpx;
   height: 124rpx;
   border-radius: 999rpx;

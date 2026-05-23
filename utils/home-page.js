@@ -1,4 +1,5 @@
 var format = require('./format');
+var back = require('./back');
 var pageTools = require('./page-tools');
 var pageNav = require('./page-nav');
 var stateStore = require('./state');
@@ -12,6 +13,9 @@ var HOME_SWIPE_COMMIT_RATIO = 0.32;
 var HOME_SWIPE_COMMIT_DISTANCE = 88;
 var HOME_SWIPE_COMMIT_VELOCITY = 0.36;
 var HOME_TRANSITION_DURATION = 280;
+var HOME_HANDOFF_FADE_DELAY = 80;
+var HOME_HANDOFF_FADE_DURATION = 140;
+var pendingPageHandoff = null;
 
 function findNodeById(nodes, nodeId) {
   var i;
@@ -64,7 +68,7 @@ function buildDesktopViewData(desktopKey, options, recentCurrentValue) {
     showRecent: !!viewOptions.showRecent,
     showDesktopChrome: !!viewOptions.showRecent,
     topOffsetClass: desktopKey === 'home2' ? 'home2-top-offset' : 'home1-top-offset',
-    gridClass: viewOptions.showRecent ? 'tile-grid home1-tile-grid' : 'tile-grid',
+    gridClass: viewOptions.showRecent ? 'tile-grid home1-tile-grid' : 'tile-grid home-preview-tile-grid',
     emptyClass: viewOptions.showRecent ? 'glass-card empty-card home1-empty-grid' : 'glass-card empty-card',
     recentEntries: recentEntries,
     hasRecentEntries: recentEntries.length > 0,
@@ -93,6 +97,68 @@ function resetPageTransition(page) {
     pageTransitionPanels: [],
     pageTransitionTrackStyle: ''
   });
+}
+
+function clearPageHandoff(page) {
+  if (!page) {
+    return;
+  }
+
+  if (page.__pageHandoffTimer) {
+    clearTimeout(page.__pageHandoffTimer);
+    page.__pageHandoffTimer = null;
+  }
+
+  if (page.__pageHandoffCleanupTimer) {
+    clearTimeout(page.__pageHandoffCleanupTimer);
+    page.__pageHandoffCleanupTimer = null;
+  }
+
+  if (!page.data || !page.data.pageHandoffVisible) {
+    return;
+  }
+
+  page.setData({
+    pageHandoffVisible: false,
+    pageHandoffPanel: null,
+    pageHandoffClass: ''
+  });
+}
+
+function consumePendingPageHandoff(page, desktopKey) {
+  var handoff = null;
+
+  if (!page || !pendingPageHandoff || pendingPageHandoff.targetKey !== desktopKey) {
+    return;
+  }
+
+  handoff = pendingPageHandoff;
+  pendingPageHandoff = null;
+
+  if (page.__pageHandoffTimer) {
+    clearTimeout(page.__pageHandoffTimer);
+  }
+  if (page.__pageHandoffCleanupTimer) {
+    clearTimeout(page.__pageHandoffCleanupTimer);
+  }
+
+  page.setData({
+    pageHandoffVisible: true,
+    pageHandoffPanel: handoff.panel,
+    pageHandoffClass: ''
+  });
+
+  page.__pageHandoffTimer = setTimeout(function () {
+    page.__pageHandoffTimer = null;
+    page.setData({
+      pageHandoffClass: 'page-handoff-shell--leaving'
+    });
+  }, HOME_HANDOFF_FADE_DELAY);
+
+  page.__pageHandoffCleanupTimer = setTimeout(function () {
+    page.__pageHandoffCleanupTimer = null;
+    clearPageHandoff(page);
+  }, HOME_HANDOFF_FADE_DELAY + HOME_HANDOFF_FADE_DURATION + 40);
 }
 
 function getViewportWidth(page) {
@@ -203,6 +269,7 @@ function settlePageSwipe(page, shouldCommit) {
   var swipe = page.__pageSwipeState;
   var destination;
   var route;
+  var targetPanel = null;
 
   if (!page || !swipe) {
     return false;
@@ -217,6 +284,7 @@ function settlePageSwipe(page, shouldCommit) {
   destination = shouldCommit ? swipe.targetOffset : swipe.baseOffset;
   swipe.currentOffset = destination;
   route = swipe.targetRoute;
+  targetPanel = shouldCommit && route ? buildDesktopViewData(route.key, getHomeOptionsByKey(route.key), 0) : null;
 
   page.setData({
     pageTransitionTrackStyle: buildPageTransitionStyle(destination, true)
@@ -226,9 +294,14 @@ function settlePageSwipe(page, shouldCommit) {
     page.__pageTransitionTimer = null;
 
     if (shouldCommit && route) {
+      pendingPageHandoff = {
+        targetKey: route.key,
+        panel: targetPanel
+      };
       wx.switchTab({
         url: route.url,
         fail: function () {
+          pendingPageHandoff = null;
           resetPageTransition(page);
         }
       });
@@ -946,27 +1019,41 @@ function createHomePage(desktopKey, options) {
       dragGhostKind: '',
       pageTransitionVisible: false,
       pageTransitionPanels: [],
-      pageTransitionTrackStyle: ''
+      pageTransitionTrackStyle: '',
+      pageHandoffVisible: false,
+      pageHandoffPanel: null,
+      pageHandoffClass: ''
     },
 
     onShow: function () {
       refreshPage(this, desktopKey, options);
+      consumePendingPageHandoff(this, desktopKey);
       openPendingQuickAdd(this);
     },
 
     onHide: function () {
       clearNodeGesture(this);
       resetPageTransition(this);
+      clearPageHandoff(this);
     },
 
     onUnload: function () {
       clearNodeGesture(this);
       resetPageTransition(this);
+      clearPageHandoff(this);
     },
 
     onPullDownRefresh: function () {
       refreshPage(this, desktopKey, options);
       wx.stopPullDownRefresh();
+    },
+
+    onCustomBack: function () {
+      return back.handleTabBack(desktopKey);
+    },
+
+    onBackPress: function () {
+      return back.handleTabBack(desktopKey);
     },
 
     onRecentChange: function (event) {

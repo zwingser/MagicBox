@@ -1,3 +1,4 @@
+var back = require('../../utils/back');
 var pageTools = require('../../utils/page-tools');
 var pageNav = require('../../utils/page-nav');
 var stateStore = require('../../utils/state');
@@ -144,6 +145,14 @@ Page({
 
   onPageTouchEnd: function (event) {
     pageNav.handleTouchEnd(this, 'settings', event);
+  },
+
+  onCustomBack: function () {
+    return back.handleTabBack('settings');
+  },
+
+  onBackPress: function () {
+    return back.handleTabBack('settings');
   },
 
   onThemePick: function (event) {

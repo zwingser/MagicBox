@@ -22,8 +22,60 @@
 .home2-content .tile-grid {
   flex: 1;
   min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 20rpx;
+  row-gap: 18rpx;
+  margin: 0;
   overflow: hidden;
-  align-content: flex-start;
+  align-content: start;
+}
+
+.home2-content .tile-slot {
+  width: auto;
+  padding: 0;
+}
+
+.home2-content .tile-card {
+  gap: 10rpx;
+}
+
+.home2-content .tile-card__icon,
+.home2-content .folder-preview {
+  width: 112rpx;
+  height: 112rpx;
+  border-radius: 34rpx;
+}
+
+.home2-content .tile-card__icon {
+  font-size: 30rpx;
+}
+
+.home2-content .folder-preview {
+  padding: 12rpx;
+  gap: 6rpx;
+}
+
+.home2-content .folder-preview__cell,
+.home2-content .folder-preview__empty {
+  width: 38rpx;
+  height: 38rpx;
+  border-radius: 14rpx;
+}
+
+.home2-content .folder-preview__cell {
+  font-size: 16rpx;
+}
+
+.home2-content .tile-card__title {
+  font-size: 20rpx;
+  line-height: 1.35;
+}
+
+.home2-content .tile-card__hint {
+  font-size: 16rpx;
+  line-height: 1.2;
+  text-align: center;
 }
 
 .home2-empty-grid {

@@ -2,28 +2,16 @@
   <view wx:if="{{hasFixedPage}}" class="fixed-page-web-shell">
     <web-view src="{{fixedPageUrl}}" bindload="onWebViewLoad" binderror="onWebViewError"></web-view>
 
-    <cover-view class="fixed-page-back-shell" style="{{fixedBackShellStyle}}" bindtap="onFixedBackTap">
-      <cover-view class="fixed-page-back">
-        <cover-view class="fixed-page-back__icon">{{backLabel}}</cover-view>
+    <cover-view class="fixed-page-header-shell" style="{{fixedHeaderShellStyle}}">
+      <cover-view class="fixed-page-header-home" style="{{fixedHeaderHomeStyle}}" bindtap="goHome1">
+        <cover-image class="fixed-page-header-home__icon" src="/assets/tabbar/home1-selected.png"></cover-image>
       </cover-view>
-    </cover-view>
 
-    <cover-view class="fixed-page-dock-shell" style="{{fixedDockShellStyle}}">
-      <cover-view class="fixed-page-dock">
-        <cover-view wx:for="{{leftDockItems}}" wx:key="key" class="{{item.itemClass}}" data-key="{{item.key}}" bindtap="onFixedDockTap">
-          <cover-image class="fixed-page-dock__icon" src="{{item.iconPath}}"></cover-image>
-        </cover-view>
-
-        <cover-view class="fixed-page-dock__center">
-          <cover-view class="fixed-page-dock__add" data-key="add" bindtap="onFixedDockTap">
-            <cover-view class="fixed-page-dock__plus">+</cover-view>
-          </cover-view>
-        </cover-view>
-
-        <cover-view wx:for="{{rightDockItems}}" wx:key="key" class="{{item.itemClass}}" data-key="{{item.key}}" bindtap="onFixedDockTap">
-          <cover-image class="fixed-page-dock__icon" src="{{item.iconPath}}"></cover-image>
-        </cover-view>
+      <cover-view class="fixed-page-header-home" style="{{fixedHeaderHome2Style}}" bindtap="goHome2">
+        <cover-image class="fixed-page-header-home__icon" src="/assets/tabbar/home2-selected.png"></cover-image>
       </cover-view>
+
+      <cover-view class="fixed-page-header-title" style="{{fixedHeaderTitleStyle}}" bindtap="onFixedTitleTap" bindlongpress="onFixedTitleLongPress">{{fixedPageTitle}}</cover-view>
     </cover-view>
   </view>
 

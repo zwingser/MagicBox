@@ -14,39 +14,11 @@
     </view>
   </view>
 
-  <view class="glass-card folder-summary">
-    <view class="feature-card__badge" style="background: {{folderColor}};">{{folderBadge}}</view>
-    <view class="folder-summary__text">
-      <view class="folder-summary__title">Folder</view>
-      <view class="folder-summary__meta">Use long press on any item to move it out, reorder it, or switch folders.</view>
-    </view>
-  </view>
-
-  <view class="surface-card field-card">
-    <view class="field-label">Folder name</view>
-    <input class="inline-input" placeholder="Rename folder" placeholder-class="inline-input-placeholder" value="{{renameDraft}}" bindinput="onRenameInput" />
-    <view class="btn-row">
-      <button class="primary-btn" bindtap="onRenameSave">Save</button>
-    </view>
-  </view>
-
-  <view class="search-shell">
-    <view class="search-icon">Q</view>
-    <input
-      class="search-input"
-      placeholder="Search inside folder"
-      placeholder-class="search-input-placeholder"
-      value="{{query}}"
-      bindinput="onSearchInput"
-      confirm-type="search"
-    />
-  </view>
-
   <view class="section-label">ITEMS</view>
   <view class="helper-text">Tap to open. Long press for layout and destination actions.</view>
 
   <view wx:if="{{items.length}}" class="surface-card list-card">
-    <view wx:for="{{items}}" wx:key="id" class="list-row" data-id="{{item.id}}" bindtap="onItemTap" bindlongpress="onItemMenu">
+    <view wx:for="{{items}}" wx:key="id" class="list-row" data-id="{{item.id}}" hover-class="list-row--active" hover-stay-time="80" bindtap="onItemTap" bindlongpress="onItemMenu">
       <view class="list-row__icon" style="background: {{item.color}};">{{item.badge}}</view>
       <view class="list-row__main">
         <view class="list-row__title">{{item.title}}</view>
@@ -56,5 +28,21 @@
     </view>
   </view>
 
-  <view wx:else class="glass-card empty-card">This folder has no matching item.</view>
+  <view wx:else class="glass-card empty-card">This folder has no items yet.</view>
+
+  <view class="glass-card folder-summary">
+    <view class="feature-card__badge" style="background: {{folderColor}};">{{folderBadge}}</view>
+    <view class="folder-summary__text">
+      <view class="folder-summary__title">Folder</view>
+      <view class="folder-summary__meta">Use long press on any item to move it out or delete it.</view>
+    </view>
+  </view>
+
+  <view class="surface-card field-card folder-rename-card">
+    <view class="field-label">Folder name</view>
+    <input class="inline-input" placeholder="Rename folder" placeholder-class="inline-input-placeholder" value="{{renameDraft}}" bindinput="onRenameInput" />
+    <view class="btn-row">
+      <button class="primary-btn" bindtap="onRenameSave">Save</button>
+    </view>
+  </view>
 </view>

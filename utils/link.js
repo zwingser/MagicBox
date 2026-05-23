@@ -121,26 +121,33 @@ function getCandidateApis() {
   return apis;
 }
 
-function tryCallApi(api, url) {
+function tryCallApi(api, url, onFail) {
   try {
-    api({ url: url });
-    return true;
+    var result = api({
+      url: url,
+      fail: function () {
+        if (typeof onFail === 'function') {
+          onFail();
+        }
+      }
+    });
+    return result !== false;
   } catch (errorOne) {
     try {
-      api(url);
-      return true;
+      var fallbackResult = api(url);
+      return fallbackResult !== false;
     } catch (errorTwo) {
       return false;
     }
   }
 }
 
-function tryOpenNativeUrl(url) {
+function tryOpenNativeUrl(url, onFail) {
   var apis = getCandidateApis();
   var i;
 
   for (i = 0; i < apis.length; i += 1) {
-    if (tryCallApi(apis[i], url)) {
+    if (tryCallApi(apis[i], url, onFail)) {
       return true;
     }
   }
@@ -179,17 +186,19 @@ function openMiniProgram(node) {
   return false;
 }
 
+function showAppUnavailable() {
+  wx.showToast({
+    title: 'APP未安装，无法打开',
+    icon: 'none'
+  });
+}
+
 function openAppDeepLink(node) {
-  if (tryOpenNativeUrl(node.url)) {
+  if (tryOpenNativeUrl(node.url, showAppUnavailable)) {
     return true;
   }
 
-  copyText(node.url, 'Deep link copied');
-  wx.showModal({
-    title: 'Deep link copied',
-    content: 'No public deep-link launcher was detected in the current runtime. The address was copied so you can continue debugging on Android.',
-    showCancel: false
-  });
+  showAppUnavailable();
   return false;
 }
 

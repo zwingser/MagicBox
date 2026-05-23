@@ -1,3 +1,4 @@
+var back = require('../../utils/back');
 var link = require('../../utils/link');
 var stateStore = require('../../utils/state');
 
@@ -62,9 +63,7 @@ function getLaunchTabUrl() {
 }
 
 function goHome1() {
-  wx.switchTab({
-    url: '/pages/home1/index'
-  });
+  back.goHome1();
 }
 
 Page({
@@ -219,13 +218,22 @@ Page({
     }
   },
 
+  onCustomBack: function () {
+    if (this.data.fixedBrowserMode) {
+      goHome1();
+      return true;
+    }
+
+    return back.handleTabBack('browser');
+  },
+
   onBackPress: function () {
     if (this.data.fixedBrowserMode) {
       goHome1();
       return true;
     }
 
-    return false;
+    return back.handleTabBack('browser');
   },
 
   onUnload: function () {

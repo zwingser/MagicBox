@@ -39,7 +39,8 @@ App({
     pendingQuickAddOpen: false,
     pendingQuickAddDraft: null,
     launchPageApplied: false,
-    pendingFixedBrowserBackHome: null
+    pendingFixedBrowserBackHome: null,
+    lastHomeBackAt: 0
   },
 
   onLaunch: function () {

@@ -1,3 +1,4 @@
+var back = require('../../utils/back');
 var pageTools = require('../../utils/page-tools');
 var stateStore = require('../../utils/state');
 
@@ -43,7 +44,7 @@ function refreshPage(page) {
     return;
   }
 
-  items = mapItems(stateStore.getFolderItems(page.data.folderId, page.data.query));
+  items = mapItems(stateStore.getFolderItems(page.data.folderId, ''));
 
   page.setData({
     themeClass: shell.themeClass,
@@ -73,7 +74,6 @@ Page({
     folderDesktop: 'home1',
     folderDesktopLabel: 'Home 1',
     renameDraft: '',
-    query: '',
     itemCount: 0,
     items: []
   },
@@ -97,11 +97,14 @@ Page({
     wx.navigateBack({ delta: 1 });
   },
 
-  onSearchInput: function (event) {
-    this.setData({
-      query: event.detail.value
-    });
-    refreshPage(this);
+  onCustomBack: function () {
+    back.goHome1();
+    return true;
+  },
+
+  onBackPress: function () {
+    back.goHome1();
+    return true;
   },
 
   onRenameInput: function (event) {
@@ -153,6 +156,11 @@ Page({
     var node = getItemNode(this, event.currentTarget.dataset.id);
     var success;
 
+    if (this.__suppressNextItemTap) {
+      this.__suppressNextItemTap = false;
+      return;
+    }
+
     if (!node) {
       pageTools.showToast('Item not found');
       return;
@@ -168,6 +176,8 @@ Page({
   onItemMenu: function (event) {
     var page = this;
     var node = getItemNode(this, event.currentTarget.dataset.id);
+
+    this.__suppressNextItemTap = true;
 
     if (!node) {
       return;
